@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import Comp2 from "./components/Comp2";
+import {useState} from "react";
+import Comp1 from "./components/Comp1";
 
 function App() {
+  const [photos, setPhotos] = useState ([]);
+const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  const addPhoto = (url) => {
+    setPhotos([...photos, url]);
+  }
+
+  const nextPhoto = () => {
+      setCurrentPhotoIndex((currentPhotoIndex+1) % photos.length);
+  }
+  const prevPhoto = () => {
+      setCurrentPhotoIndex((currentPhotoIndex-1) % photos.length);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Comp1
+        photos={photos}
+        currentPhotoIndex={currentPhotoIndex}
+        nextPhoto={nextPhoto}
+        prevPhoto={prevPhoto}
+        setCurrentPhotoIndex={setCurrentPhotoIndex}
+        />
+      <Comp2 addPhoto={addPhoto} />
     </div>
   );
 }
